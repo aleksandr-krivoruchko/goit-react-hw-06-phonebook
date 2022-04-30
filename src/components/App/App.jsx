@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { add, remove, filter } from '../../redux/store';
 import { Form } from '../Form/Form';
 import { Section } from '../Section/Section';
 import { ContactsList } from '../ContactsList/ContactsList';
@@ -10,8 +11,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export function App() {
-  const [contacts, setContacts] = useState(() => getContactsFromStorage());
-  const [filterName, setFilter] = useState('');
+  //   const [filterName, setFilter] = useState('');
+  const contacts = useSelector(state => state.contacts);
+  const dispatch = useDispatch();
+  const filter = useSelector(state => state.filter);
 
   // Получение данных формы  и добавление контакта
   function addContact(name, number) {
@@ -23,8 +26,7 @@ export function App() {
       name,
       number,
     };
-
-    setContacts(state => [...state, contact]);
+    dispatch(add(contact));
   }
 
   // Проверка на существующий контакт
@@ -39,7 +41,7 @@ export function App() {
 
   //Фильтрация контактов по имени
   function filterContacts() {
-    const normalizedFilter = filterName.toLowerCase();
+    const normalizedFilter = filter.toLowerCase();
 
     return contacts.filter(({ name }) =>
       name.toLowerCase().includes(normalizedFilter)
@@ -48,7 +50,8 @@ export function App() {
 
   //  Удаление контакта
   function deleteContact(contactId) {
-    setContacts(state => state.filter(({ id }) => id !== contactId));
+    dispatch(remove(contactId));
+    //  setContacts(state => state.filter(({ id }) => id !== contactId));
   }
 
   //  Получение контактов из хранилища
@@ -65,7 +68,7 @@ export function App() {
     <Section title="Phonebook">
       <Form onSubmit={addContact}></Form>
       <Section title="Contacts">
-        <Filter filter={filterName} setFilter={setFilter}></Filter>
+        <Filter />
         <ContactsList
           contacts={filterContacts()}
           deleteContact={deleteContact}></ContactsList>
