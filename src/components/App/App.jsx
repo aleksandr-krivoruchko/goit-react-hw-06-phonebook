@@ -1,4 +1,4 @@
-import {  useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { add, remove, filter } from '../../redux/store';
 import { Form } from '../Form/Form';
@@ -41,7 +41,6 @@ export function App() {
   //Фильтрация контактов по имени
   function filterContacts() {
     const normalizedFilter = filterValue.toLowerCase();
-console.log(normalizedFilter);
     return contacts.filter(({ name }) =>
       name.toLowerCase().includes(normalizedFilter)
     );
@@ -52,11 +51,11 @@ console.log(normalizedFilter);
     dispatch(remove(contactId));
   }
 
-
   //  Запись контактов в хранилище
-  // useEffect(() => {
-  //   window.localStorage.setItem('contacts', JSON.stringify(contacts));
-  // }, [contacts]);
+  useEffect(() => {
+    window.localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
+
   return (
     <Section title="Phonebook">
       <Form onSubmit={addContact}></Form>

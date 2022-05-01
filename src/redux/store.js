@@ -16,16 +16,14 @@ const contactsReducer = createReducer(
 });
 
 const filterReducer = createReducer("", {
-  [filter]: (state, action) => state + action.payload
+  [filter]: (state, action) => action.payload
 });
 
 
 export const store = configureStore({
   reducer: {
-  
     contacts: contactsReducer,
     filter: filterReducer
-  
   }
 });
 
