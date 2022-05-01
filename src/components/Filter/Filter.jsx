@@ -1,9 +1,8 @@
-import PropTypes from 'prop-types';
 import { Label, Input } from '../Form/FormStyle.styled';
 import { useSelector, useDispatch } from 'react-redux';
+import { filter } from "../../redux/store";
 
 export function Filter() {
-  const filter = useSelector(state => state.filter);
   const dispatch = useDispatch();
 
   return (
@@ -11,8 +10,7 @@ export function Filter() {
       <Label>
         Find contacts by name
         <Input
-          value={filter}
-          onChange={e => dispatch(e.target.value)}
+          onChange={e => dispatch(filter(e.target.value))}
           type="text"
         />
       </Label>
@@ -20,7 +18,3 @@ export function Filter() {
   );
 }
 
-Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
-  setFilter: PropTypes.func.isRequired,
-};
