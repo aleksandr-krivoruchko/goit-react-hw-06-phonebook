@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { add, remove, filter } from '../../redux/store';
+import { add, remove} from '../../redux/store';
 import { Form } from '../Form/Form';
 import { Section } from '../Section/Section';
 import { ContactsList } from '../ContactsList/ContactsList';
@@ -15,7 +15,6 @@ export function App() {
   const dispatch = useDispatch();
   const filterValue = useSelector(state => state.filter);
 
-  // Получение данных формы  и добавление контакта
   function addContact(name, number) {
     if (checkExistingContact(name)) {
       return;
@@ -28,7 +27,6 @@ export function App() {
     dispatch(add(contact));
   }
 
-  // Проверка на существующий контакт
   function checkExistingContact(newName) {
     const existingСontact = contacts.find(({ name }) => name === newName);
 
@@ -38,7 +36,6 @@ export function App() {
     }
   }
 
-  //Фильтрация контактов по имени
   function filterContacts() {
     const normalizedFilter = filterValue.toLowerCase();
     return contacts.filter(({ name }) =>
@@ -46,12 +43,10 @@ export function App() {
     );
   }
 
-  //  Удаление контакта
   function deleteContact(contactId) {
     dispatch(remove(contactId));
   }
 
-  //  Запись контактов в хранилище
   useEffect(() => {
     window.localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
