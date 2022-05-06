@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { add, remove} from '../../redux/store';
+import { add, remove } from '../../redux/store';
 import { Form } from '../Form/Form';
 import { Section } from '../Section/Section';
 import { ContactsList } from '../ContactsList/ContactsList';
