@@ -10,10 +10,10 @@ export const ContactStyle = styled.li`
 
 export const ButtonStyle = styled.button`
   margin-right: 20px;
-   color: yellow;   
+  color: yellow;
   background-color: transparent;
-   border-color: yellow;
-   border-radius: 50%;
+  border-color: yellow;
+  border-radius: 50%;
   cursor: pointer;
   outline: none;
   &:hover {

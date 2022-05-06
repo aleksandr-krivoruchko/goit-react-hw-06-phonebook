@@ -1,22 +1,22 @@
-import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { add, remove } from '../../redux/store';
+import { add, remove, getContacts, getFilterValue } from '../../redux/persist';
+import { nanoid } from 'nanoid';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { Form } from '../Form/Form';
 import { Section } from '../Section/Section';
 import { ContactsList } from '../ContactsList/ContactsList';
 import { Filter } from '../Filter/Filter';
-
-import { nanoid } from 'nanoid';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { checkExistingContact } from '../../services/checkContact';
 
 export function App() {
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(getContacts);
+  const filterValue = useSelector(getFilterValue);
   const dispatch = useDispatch();
-  const filterValue = useSelector(state => state.filter);
 
   function addContact(name, number) {
-    if (checkExistingContact(name)) {
+    if (checkExistingContact(name, contacts)) {
       return;
     }
     const contact = {
@@ -25,15 +25,6 @@ export function App() {
       number,
     };
     dispatch(add(contact));
-  }
-
-  function checkExistingContact(newName) {
-    const existingСontact = contacts.find(({ name }) => name === newName);
-
-    if (existingСontact) {
-      toast(`${existingСontact.name} is already in contacts`);
-      return true;
-    }
   }
 
   function filterContacts() {
@@ -47,10 +38,6 @@ export function App() {
     dispatch(remove(contactId));
   }
 
-  useEffect(() => {
-    window.localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
   return (
     <Section title="Phonebook">
       <Form onSubmit={addContact}></Form>
@@ -58,7 +45,8 @@ export function App() {
         <Filter />
         <ContactsList
           contacts={filterContacts()}
-          deleteContact={deleteContact}></ContactsList>
+          deleteContact={deleteContact}
+        ></ContactsList>
       </Section>
       <ToastContainer position="top-left" autoClose={3000} />
     </Section>

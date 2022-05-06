@@ -1,6 +1,6 @@
 import { Label, Input } from '../Form/FormStyle.styled';
 import { useDispatch } from 'react-redux';
-import { filter } from '../../redux/store';
+import { filter } from '../../redux/persist';
 
 export function Filter() {
   const dispatch = useDispatch();
