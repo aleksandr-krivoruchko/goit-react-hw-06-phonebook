@@ -1,29 +1,20 @@
-import PropTypes from 'prop-types';
 import { Contact } from '../Contact/Contact';
+import { useFilter } from '../../redux/persist.js';
 
-export function ContactsList({ contacts, deleteContact }) {
+export function ContactsList() {
+  const { filteredContacts, deleteContact } = useFilter();
+
   return (
     <ul>
-      {contacts.map(item => (
+      {filteredContacts.map(({ number, name, id }) => (
         <Contact
-          key={item.number}
-          number={item.number}
-          name={item.name}
-          id={item.id}
-          deleteContact={deleteContact}
+          key={number}
+          number={number}
+          name={name}
+          id={id}
+          deleteContact={() => deleteContact(id)}
         />
       ))}
     </ul>
   );
 }
-
-ContactsList.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.number.isRequired,
-      deleteContact: PropTypes.func.isRequired,
-    })
-  ),
-};

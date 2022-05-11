@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
-
 import { Btn, FormStyle, Label, Input } from './FormStyle.styled';
+import { useAddContact } from '../../redux/persist';
 
-export function Form({ onSubmit }) {
+export function Form() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const addContact = useAddContact();
 
   function handleChange(e) {
     const { name, value } = e.currentTarget;
@@ -27,7 +27,7 @@ export function Form({ onSubmit }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    onSubmit(name, number);
+    addContact(name, number);
 
     reset();
   }
@@ -70,7 +70,3 @@ export function Form({ onSubmit }) {
     </FormStyle>
   );
 }
-
-Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};

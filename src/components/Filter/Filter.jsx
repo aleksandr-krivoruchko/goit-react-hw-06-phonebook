@@ -6,11 +6,9 @@ export function Filter() {
   const dispatch = useDispatch();
 
   return (
-    <>
-      <Label>
-        Find contacts by name
-        <Input onChange={e => dispatch(filter(e.target.value))} type="text" />
-      </Label>
-    </>
+    <Label>
+      Find contacts by name
+      <Input onChange={e => dispatch(filter(e.target.value))} type="text" />
+    </Label>
   );
 }

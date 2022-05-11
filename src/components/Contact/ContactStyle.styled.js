@@ -5,7 +5,6 @@ export const ContactStyle = styled.li`
   color: yellow;
   font-size: 20px;
   margin-top: 10px;
-  text-transform: uppercase;
 `;
 
 export const ButtonStyle = styled.button`
